@@ -7,6 +7,7 @@
         <TextBox Height="50" Width="204" Name="searchBox" HorizontalAlignment="Left" ></TextBox>
         <Button Height="50" Width="100" Click="SearchButton_Click" Content="Search"></Button>
         <Button Height="50" Width="100" Click="AddButton_Click" VerticalAlignment="Bottom" Content="Add"></Button>
+        <Button Height="50" Width="100" Click="AddAllButton_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Content="Add All"></Button>
         <ComboBox Width="200" Name="listBox" HorizontalAlignment="Right" VerticalAlignment="Center"/>
     </Grid>
 </Window>

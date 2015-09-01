@@ -89,10 +89,19 @@ namespace MarvelComicCalanderUpdater {
 		}
 
 		private void AddButton_Click(object sender, RoutedEventArgs e) {
-			Comics.Result test = (Comics.Result)listBox.SelectedItem;
+			Comics.Result comic = (Comics.Result)listBox.SelectedItem;
 			GoogleCalender calender = new GoogleCalender();
-			calender.CreateEvent(listBox.Text, test.dates[0].date);
+			calender.CreateEvent(listBox.Text, comic.dates[0].date);
 		}
+
+        private void AddAllButton_Click(object sender, RoutedEventArgs e) {
+            GoogleCalender calender = new GoogleCalender();
+            foreach (Comics.Result comic in listBox.ItemsSource) {
+                if (Convert.ToDateTime(comic.dates[0].date) > DateTime.Now){
+                    calender.CreateEvent(comic.title, comic.dates[0].date);
+                }
+            }
+        }
 
     }
 }

@@ -22,13 +22,21 @@ namespace MarvelComicCalanderUpdater {
 		public void CreateEvent(string eventName, string date) {
 			//Create new API Service
 			CalendarService service = createCalenderService();
+            //check if even already exists
+            EventsResource.ListRequest eventListRequest = service.Events.List("belhq5joiqq5iuu5kf04h1vt74@group.calendar.google.com");
+            Events eventList = eventListRequest.Execute();
+            bool duplicate = eventList.Items.Any(x => x.Summary == eventName);
 
-			//Create new event
-			Event newEvent = new Event(){Summary = eventName};
-			newEvent.Start = new EventDateTime() { DateTime = Convert.ToDateTime(date), TimeZone = "Europe/London" };
-			newEvent.End = new EventDateTime() { DateTime = Convert.ToDateTime(date), TimeZone = "Europe/London" };
-			newEvent = service.Events.Insert(newEvent, "callum_collins@hotmail.com").Execute();
-			Console.WriteLine("Event created: {0} \n", newEvent.HtmlLink);
+            if (duplicate == false) {
+			    //Create new event (all day event)
+			    Event newEvent = new Event(){Summary = eventName};
+                newEvent.Start = new EventDateTime();
+                newEvent.End = new EventDateTime();
+
+		    	newEvent.Start.Date = Convert.ToDateTime(date).ToString("yyyy-MM-dd");
+                newEvent.End.Date = Convert.ToDateTime(date).ToString("yyyy-MM-dd");
+                newEvent = service.Events.Insert(newEvent, "belhq5joiqq5iuu5kf04h1vt74@group.calendar.google.com").Execute();
+            }   
 		}
 
 		private CalendarService createCalenderService() {
