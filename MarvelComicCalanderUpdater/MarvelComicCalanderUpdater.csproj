@@ -133,6 +133,7 @@
     </Compile>
     <Compile Include="Comics.cs" />
     <Compile Include="GoogleCalender.cs" />
+    <Compile Include="MarvelApi.cs" />
     <Compile Include="Series.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
