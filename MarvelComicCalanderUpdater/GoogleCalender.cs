@@ -4,6 +4,7 @@ using Google.Apis.Calendar.v3.Data;
 using Google.Apis.Services;
 using Google.Apis.Util.Store;
 using System;
+using System.Configuration;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,13 +18,13 @@ namespace MarvelComicCalanderUpdater {
 
 		string[] Scopes = { CalendarService.Scope.Calendar, CalendarService.Scope.CalendarReadonly };
 		string ApplicationName = "Google Calendar API Quickstart";
-
+        private string calenderAddress = ConfigurationManager.AppSettings["calenderAddress"];
 
 		public void CreateEvent(string eventName, string date) {
 			//Create new API Service
 			CalendarService service = createCalenderService();
             //check if even already exists
-            EventsResource.ListRequest eventListRequest = service.Events.List("belhq5joiqq5iuu5kf04h1vt74@group.calendar.google.com");
+            EventsResource.ListRequest eventListRequest = service.Events.List("calenderAddress");
             Events eventList = eventListRequest.Execute();
             bool duplicate = eventList.Items.Any(x => x.Summary == eventName);
 
@@ -35,7 +36,7 @@ namespace MarvelComicCalanderUpdater {
 
 		    	newEvent.Start.Date = Convert.ToDateTime(date).ToString("yyyy-MM-dd");
                 newEvent.End.Date = Convert.ToDateTime(date).ToString("yyyy-MM-dd");
-                newEvent = service.Events.Insert(newEvent, "belhq5joiqq5iuu5kf04h1vt74@group.calendar.google.com").Execute();
+                newEvent = service.Events.Insert(newEvent, "calenderAddress").Execute();
             }   
 		}
 
